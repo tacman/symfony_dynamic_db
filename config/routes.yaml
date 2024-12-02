@@ -2,3 +2,8 @@ add_product:
   path: /product/add
   controller: App\Controller\ProductController::add
   methods: POST
+
+list_products:
+    path: /
+    controller: App\Controller\ProductController::list
+    methods: GET
