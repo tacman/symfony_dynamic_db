@@ -12,3 +12,7 @@
 ###< symfony/framework-bundle ###
 
 .idea
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

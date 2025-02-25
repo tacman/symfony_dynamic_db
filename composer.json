@@ -1,26 +1,31 @@
 {
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
     "name": "tacman/symfony_dynamic_db",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.4",
+        "php": "^8.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "composer/package-versions-deprecated": "1.11.99.1",
-        "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.2",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
-        "symfony/console": "^5.4|^6.0",
-        "symfony/dotenv": "^5.4|^6.0",
+        "symfony/console": "^7.2",
+        "symfony/dotenv": "^7.2",
         "symfony/flex": "^2.2",
-        "symfony/framework-bundle": "^5.4|^6.0",
-        "symfony/yaml": "^5.4|^6.0"
+        "symfony/framework-bundle": "^7.2",
+        "symfony/monolog-bundle": "^3.0",
+        "symfony/runtime": "^7.2",
+        "symfony/yaml": "^7.2"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.25"
+        "rector/rector": "*",
+        "symfony/debug-bundle": "^7.2",
+        "symfony/maker-bundle": "^1.25",
+        "symfony/stopwatch": "^7.2",
+        "symfony/web-profiler-bundle": "^7.2"
     },
     "config": {
         "optimize-autoloader": true,
@@ -29,7 +34,8 @@
         },
         "sort-packages": true,
         "allow-plugins": {
-            "symfony/flex": true
+            "symfony/flex": true,
+            "symfony/runtime": true
         }
     },
     "autoload": {
@@ -59,8 +65,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "^5.4|^6.0"
+            "allow-contrib": true
         }
     }
 }

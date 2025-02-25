@@ -7,28 +7,30 @@ namespace App\Controller;
 use App\DBAL\MultiDbConnectionWrapper;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ProductController extends AbstractController
 {
-	private EntityManagerInterface $em;
 
-	public function __construct(EntityManagerInterface $em)
+	public function __construct(private EntityManagerInterface $em)
 	{
-		$this->em = $em;
 	}
 
-    public function list(Request $request): JsonResponse
+    #[Route('/list/{tenant}', name: 'product_list', methods: ['GET'])]
+    #[Template('app/product/list.html.twig')]
+    public function list(Request $request, string $tenant): Response|array
     {
         $connection = $this->em->getConnection();
         if (!$connection instanceof MultiDbConnectionWrapper) {
             throw new \RuntimeException('Wrong connection');
         }
-        $databaseName = 'test';
-        $x = $connection->selectDatabase($databaseName);
+        $databaseName = $tenant;
+        $connection->selectDatabase($databaseName);
         $sm = $connection->createSchemaManager();
         $tables = $sm->listTables();
         foreach ($tables as $table) {
@@ -37,10 +39,15 @@ class ProductController extends AbstractController
         }
 //        listTableColumns()
 
-        dd($tables, $connection->getParams(), $connection->getDatabase(), $connection);
-        return new Response($databaseName);
+//        dd($tables, $connection->getParams(), $connection->getDatabase(), $connection);
+        return  [
+            'tenant' => $tenant,
+            'tables' => $tables,
+            'dbName' => $databaseName,
+        ];
     }
 
+    #[Route('/add', name: 'product_add', methods: ['GET', 'POST'])]
 	public function add(Request $request): JsonResponse
 	{
 		$connection = $this->em->getConnection();

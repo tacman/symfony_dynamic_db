@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AppController!{% endblock %}
+
+{% block body %}
+
+    <div class="example-wrapper">
+
+        <ul>
+            {% for tenant in ['toys','food'] %}
+                <li>
+                    <a href="{{ path('product_list', {tenant: tenant}) }}">
+                        List {{ tenant }}
+                    </a>
+                    <a href="{{ path('product_add', {tenant: tenant}) }}">
+                        Add a record to {{ tenant }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
